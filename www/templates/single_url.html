@@ -1,0 +1,68 @@
+{% extends '__base__.html' %}
+
+{% block title %}零一之美-关注吧{% endblock %}
+
+{% block beforehead %}
+
+<script>
+</script>
+
+{% endblock %}
+
+{% block content %}
+	
+    <div class="uk-width-medium-3-4">
+        <article class="uk-article">
+            <h2><a href="#">{{ url.url }}</a></h2>
+			<hr>
+            <p class="uk-article-meta">创建于{{ url.create_time }}</p>
+			<p> 当前状态：
+				{% if url.status == 0 %}
+					已经停止
+				{% else %}
+					正在运行
+				{% endif %}
+			</p>
+            <p>摘要：<br>{{ url.summary }}</p>
+			<p>邮件发送频率：{{ url.frequent }}</p>
+			<p>邮件发送数量阈值：{{ url.top_num }}</p>
+			<p>总共发送邮件数量：{{ url.send_mail_num }}</p>
+			<p>总共发送新纪录数量：{{ url.total_record_num }}</p>
+			<p>最后一次发送时间：{{ url.last_send_time }}</p>
+			
+			<a class="uk-button uk-button-primary" href="/index/delete/{{ url.id }}">删除</a>
+			{% if url.status == 0 %}
+            <a class="uk-button uk-button-primary" href="/index/open/{{url.id }}">打开</a>
+			{% else %}
+            <a class="uk-button uk-button-primary" href="/index/close/{{ url.id }}">关闭</a>
+			{% endif %}
+            
+            <!--<p><a href="/index/blog/{{ url.id }}">继续阅读 <i class="uk-icon-angle-double-right"></i></a></p>-->
+        </article>
+        <hr class="uk-article-divider">
+	</div>
+    <div class="uk-width-medium-1-4">
+        <div class="uk-panel uk-panel-header">
+            我们的微信号：matrixstrom</br>
+			请关注我们
+			<img src="/static/qrcode_for_gh_40d5eee87603_258_litle.jpg">
+
+			<!-- 多说评论框 start -->
+			<div class="ds-thread" data-thread-key="" data-title="" data-url=""></div>
+			<!-- 多说评论框 end -->
+			<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+			<script type="text/javascript">
+				var duoshuoQuery = {short_name:"raiet"};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0] 
+					|| document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+			</script>
+        </div>
+    </div>
+
+{% endblock %}

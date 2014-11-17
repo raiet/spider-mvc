@@ -1,0 +1,84 @@
+{% extends '__base__.html' %}
+
+{% block title %}添加url{% endblock %}
+
+{% block beforehead %}
+
+<script>
+
+$(function () {
+    var vm = new Vue({
+        el: '#form-blog',
+        data: {
+            url: '',
+            frequent: '',
+			top_num: '',
+			summary: ''
+        },
+        methods: {
+            submit: function (event) {
+                event.preventDefault();
+                startLoading();
+                postApi('/api/url', {
+                    url: this.url.trim(),
+                    frequent: this.frequent,
+					top_num: this.top_num,
+					summary:this.summary
+
+                }, function (err, r) {
+                    if (err) {
+                        showError(err);
+                    }
+                    else {
+                        return location.assign('/index');
+                    }
+                    stopLoading();
+                });
+            }
+        }
+    });
+});
+
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="uk-width-2-3">
+        <form id="form-blog" v-on="submit: submit" class="uk-form uk-form-stacked">
+            <div class="uk-alert uk-alert-danger uk-hidden"></div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">您要监控的url:</label>
+                <div class="uk-form-controls">
+                    <input v-model="url" name="url" type="text" placeholder="url" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <label class="uk-form-label">url描述:</label>
+                <div class="uk-form-controls">
+                    <textarea v-model="summary" rows="4" name="summary" placeholder="摘要" class="uk-width-1-1" style="resize:none;"></textarea>
+                </div>
+            </div>
+			<p>注意，以下两项如果为空，则使用系统默认值，如果不为空，则都有效。<br>规则为：[发送间隔时间]分钟内有新纪录 或 新纪录已达到[新纪录阈值]，时则先邮箱发送通知，请设置时慎重！！<p>
+			<div class="uk-form-row">
+                <label class="uk-form-label">发送间隔时间(分钟):</label>
+                <div class="uk-form-controls">
+                    <input v-model="frequent" name="frequent" type="text" placeholder="frequent" class="uk-width-1-1">
+                </div>
+            </div>
+			<div class="uk-form-row">
+                <label class="uk-form-label">新纪录阈值(个):</label>
+                <div class="uk-form-controls">
+                    <input v-model="top_num" name="top_num" type="text" placeholder="top_num" class="uk-width-1-1">
+                </div>
+            </div>
+            <div class="uk-form-row">
+                <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-save"></i> 保存</button>
+               <!-- <button v-on="click: cancel()" type="button" class="uk-button"><i class="uk-icon-times"></i> 取消</button>-->
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
