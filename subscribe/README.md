@@ -16,7 +16,7 @@ subscribe文件夹，主要功能是抓取和解析网页，有新纪录时发�
 其实主要是这几个文件实现了解析功能，其中提供一个函数，工线程中回调就可以了，这个函数需要一个参数，那就是数据库activeurl表的对象，这个对象定义在`www/models.py`中
 
 ##4，threadpool文件夹
-实现了一个简单的线程池，具体详见[www/README.MD](threadpool/README.md)
+实现了一个简单的线程池，具体详见[threadpool/README.MD](threadpool/README.md)
 
 ##5，subscribe.py
 这里是这个模块的主入口，这里会调用上面的所有模块。
